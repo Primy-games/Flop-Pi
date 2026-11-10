@@ -38,8 +38,8 @@ Disquetes: por supuesto, necesitarás disquetes físicos. No hemos llegado hasta
 
 Clona el repositorio y ejecuta el instalador. Él se encargará de preparar el sistema y configurar los componentes necesarios.
 
-git clone https://github.com/USUARIO/freedos-kiosk.git
-cd freedos-kiosk
+git clone https://github.com/Primy-games/Flop-Py.git
+cd Flop-Py
 sudo ./instalar.sh
 
 El instalador utiliza automáticamente el usuario que lo ejecuta (SUDO_USER) como usuario de ejecución (RUN_USER).
@@ -347,8 +347,8 @@ Before getting started, make sure you have the following hardware ready. There a
 Clone the repository and run the installer. It will take care of preparing the system and configuring the required components.
 
 ```bash
-git clone https://github.com/USUARIO/freedos-kiosk.git
-cd freedos-kiosk
+git clone https://github.com/Primy-games/Flop-Py.git
+cd Flop-Py
 sudo ./instalar.sh
 ```
 
