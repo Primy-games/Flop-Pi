@@ -1,0 +1,1 @@
+SUBSYSTEM=="block", ENV{ID_USB_TYPE}=="floppy", SYMLINK+="floppy-usb"
