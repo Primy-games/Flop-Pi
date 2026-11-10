@@ -307,13 +307,13 @@ Y eso incluye aceptar que, algunas veces, tendrás que esperar.
 
 ## Flop-Py: What Is It and What Is Its Philosophy?
 
-Flop-Py was born out of nostalgia for bringing back the authentic experience of the early x86 computers: the clatter of floppy disk drives, the storage limitations, and the unmistakable sound of Sound Blaster cards.
+Flop-Py was born out of nostalgia for bringing back the authentic experience of the early x86 computers: the clatter of floppy disk drives, storage limitations, and the unmistakable sound of Sound Blaster cards.
 
 But Flop-Py doesn't just want to imitate that era. It wants you to experience it all over again.
 
 The project is designed to work with physical floppy disks through a USB drive (get ready, because you'll need actual floppy disks), preserving both their advantages and their drawbacks. No shortcuts that take away from the original experience. All this while taking advantage of the connectivity and compact size of devices like the Raspberry Pi, because let's face it, space is at a premium.
 
-**You won't find any unnecessary conveniences here.**
+You won't find any unnecessary conveniences here.
 
 If you're looking for a modern emulator that lets you use virtual drives, mount ISO images, or enjoy all the conveniences we've grown accustomed to nowadays, this probably isn't the place for you.
 
@@ -321,25 +321,30 @@ Flop-Py follows a different philosophy: bringing back the experience of sitting 
 
 Because here, loading times aren't simulated: they're endured and enjoyed.
 
-Flop-Py isn't for everyone. It's a project for those who grew up with that kind of computing, for curious minds who want to discover how things really worked back then, and for those who believe that configuring a computer was almost as much fun as actually using it.
+Flop-Py isn't for everyone. It's a project for those who enjoyed computing back then, for curious minds who want to discover how things really worked, and for those who believe that configuring a computer was almost as much fun as actually using it.
 
-**If you've ever booted a computer from a 3½-inch floppy disk, you probably know exactly what we're talking about.**
+If you've ever booted a computer from a 3½-inch floppy disk, you probably know exactly what we're talking about.
 
-**Computing the way it used to be. With the limitations it used to have. And without apologizing for any of it.**
+Computing the way it used to be. With the limitations it used to have. And without apologizing for any of it.
 
-**Welcome to Flop-Py.**
+Welcome to Flop-Py.
 
-### Requirements
+---
 
-- Raspberry Pi 3 Model B, 3B+ or 4/400. The 3 is the slowest and has 1 GB of RAM.
-- 64-bit Raspberry Pi OS, freshly installed, with Internet access.
-- Official power supply, or 5 V and 3 A. A weak supply makes the Pi throttle itself.
-- microSD card of 32 GB or more.
-- USB floppy drive (tested: NEC USB UF000x).
-- About 17 GB free.
-- Monitor with HDMI.
+## Requirements: What do you need?
 
-### Installation
+Before getting started, make sure you have the following hardware ready. There are no magic virtual machines or imaginary floppy drives here: we need real hardware.
+
+- **Raspberry Pi:** Models 3 Model B, 3B+, 4 or 400.
+- The Raspberry Pi 3 Model B is the least recommended option. It has the slowest processor among the supported models, and its 1 GB of RAM makes it the most limited choice. If you're looking for an experience as close as possible to the original, a Pi 4 is preferable.
+- **Operating system:** A fresh installation of 64-bit Raspberry Pi OS with an Internet connection.
+- **Storage:** 32 GB microSD card.
+- **Floppy drive:** Compatible USB floppy drive (tested with NEC USB UF000x and TEAC FD-05PUB).
+- **Floppy disks:** Of course, you'll need actual physical floppy disks. We haven't come this far just to use virtual disk images.
+
+## Installation: Let's get started
+
+Clone the repository and run the installer. It will take care of preparing the system and configuring the required components.
 
 ```bash
 git clone https://github.com/USUARIO/freedos-kiosk.git
@@ -347,30 +352,56 @@ cd freedos-kiosk
 sudo ./instalar.sh
 ```
 
-The installer sets the user who runs it (`SUDO_USER`) as `RUN_USER` in the script. At the end it asks whether you want to reboot. If not, reboot later with `sudo reboot`.
+The installer automatically uses the user who launched it (`SUDO_USER`) as the runtime user (`RUN_USER`).
 
-To force the installer language: `sudo IDIOMA=es ./instalar.sh` or `sudo IDIOMA=en ./instalar.sh`.
+At the end, it will ask whether you want to reboot the system. If you prefer to do it later, you can reboot manually:
 
-### Usage
-
-- **Floppies:** connect the USB floppy drive with a disk inside. It is inserted into A: automatically. When you change disks, FreeDOS reads the new one without rebooting.
-- **Mouse:** it is captured when you click in the window. To release it: Ctrl+Alt+G.
-- **Full screen:** Ctrl+Alt+F.
-- **Shutdown:** type `SHUTDOWN` inside FreeDOS. When QEMU closes, the Pi powers off by default (see "Customize" to change it).
-
-**Important:** never pull the power cable while FreeDOS is running. Always exit with `SHUTDOWN`.
-
-### Project structure
-
+```bash
+sudo reboot
 ```
+
+### Need to change the installer's language?
+
+You can force the language using the `IDIOMA` variable:
+
+```bash
+sudo IDIOMA=es ./instalar.sh
+```
+
+Or select English:
+
+```bash
+sudo IDIOMA=en ./instalar.sh
+```
+
+## Usage: Welcome back to the 1980s
+
+Once installed and rebooted, Flop-Py will start automatically.
+
+Here are some basic operations:
+
+- **Floppy disks:** Connect the USB floppy drive with a disk inserted. Flop-Py will automatically detect it as drive A:. When you swap disks, the system will detect the new one without requiring a reboot.
+- **Mouse:** The mouse is captured when you click inside the window.
+- **Fullscreen:** Enabled automatically.
+- **Shutdown:** Type `SHUTDOWN` inside FreeDOS. When QEMU closes, the Raspberry Pi will automatically shut down by default.
+
+**IMPORTANT:** Never disconnect the Raspberry Pi's power supply while FreeDOS is running. Always use the `SHUTDOWN` command to shut down the system properly.
+
+## Project structure
+
+This is how the repository files are organized:
+
+```text
 freedos-kiosk/
 ├── instalar.sh                  Installer (bilingual)
-├── README.md                    This file
+├── README.md                    Project documentation
 ├── src/
-│   ├── freedos-kiosk.sh         Launches QEMU, volumes, HDMI output and floppy watcher
-│   ├── freedos-kiosk-xinitrc    X session: intro video and launch
+│   ├── freedos-kiosk.sh         QEMU launcher, audio levels,
+│   │                            HDMI output and floppy disk monitoring
+│   ├── freedos-kiosk-xinitrc    X session: intro video
+│   │                            and system launch
 │   ├── freedos-kiosk.service    systemd service
-│   └── 90-floppy-usb.rules      udev rule: creates /dev/floppy-usb
+│   └── 90-floppy-usb.rules      udev rule for /dev/floppy-usb
 ├── media/
 │   └── intro.mp4                Intro video (optional)
 └── image/
@@ -378,69 +409,156 @@ freedos-kiosk/
     └── SHA256SUMS               Image checksum
 ```
 
-### What gets installed and changed
+## What does it install and modify?
 
-**Packages:** qemu-system-x86, qemu-system-gui, socat, xinit, openbox, x11-xserver-utils, unclutter, mpv, pulseaudio-utils, xz-utils.
+Flop-Py needs to prepare certain operating system components to provide a direct boot experience, without desktops or unnecessary elements.
 
-**System files:**
+### Installed packages
 
-- `/usr/local/bin/freedos-kiosk.sh` and `/usr/local/bin/freedos-kiosk-xinitrc`
+- qemu-system-x86
+- qemu-system-gui
+- socat
+- xinit
+- openbox
+- x11-xserver-utils
+- unclutter
+- mpv
+- pulseaudio-utils
+- xz-utils
+
+### System files
+
+The installer creates or modifies the following files and directories:
+
+- `/usr/local/bin/freedos-kiosk.sh`
+- `/usr/local/bin/freedos-kiosk-xinitrc`
 - `/etc/systemd/system/freedos-kiosk.service`
 - `/etc/udev/rules.d/90-floppy-usb.rules`
-- `/var/lib/freedos-kiosk/` (image and video)
+- `/var/lib/freedos-kiosk/` (system image and video)
 - `/boot/firmware/cmdline.txt` (a backup is saved as `cmdline.txt.bak`)
-- `/boot/firmware/config.txt`: adds `disable_splash=1` under `[all]`, to hide the rainbow screen at boot.
+- `/boot/firmware/config.txt` (adds `disable_splash=1` inside `[all]` to hide the rainbow splash screen during boot).
 
-**System changes:**
+### System modifications
 
-- `getty@tty1` is masked (no login on screen).
-- The default target becomes `multi-user.target` and `lightdm` is disabled.
-- cloud-init and `NetworkManager-wait-online` are disabled to speed up boot. This does not affect networking.
-- The welcome wizard (`piwiz.desktop`) is removed.
-- `loginctl enable-linger` for your user, so PipeWire is available at boot.
+To achieve direct boot, the installer makes the following changes:
 
-### Customize
+- Masks `getty@tty1`, removing the login prompt from the main terminal.
+- Changes the default boot target to `multi-user.target` and disables `lightdm`.
+- Disables `cloud-init` and `NetworkManager-wait-online` to speed up boot without disabling network connectivity.
+- Removes the welcome wizard (`piwiz.desktop`).
+- Enables `loginctl enable-linger` for the runtime user, allowing PipeWire to be available during startup.
 
-- **Volumes:** in `src/freedos-kiosk.sh`, the volume section. The sound card (snd0) and the PC speaker (snd1) are found by name on every boot. Current values: sink 1.00, sound card 1.00, speaker 0.40. Adjust them if your Pi sounds different.
-- **Power off on exit:** in `src/freedos-kiosk.sh`, `POWEROFF_AL_SALIR=1` powers the Pi off when QEMU closes. Change it to `0` to keep it on.
-- **Memory, CPU, devices:** in the `qemu-system-i386` line of the same script (`-m`, `-cpu`, `-accel`, `-device`).
-- **HDMI audio output:** the script automatically looks for the PipeWire HDMI output at boot and uses it as default if it exists. For another output (for example the 3.5 mm jack), change the `pactl set-default-sink` line or use `wpctl set-default` manually.
-- **Intro video:** replace `media/intro.mp4` with another before installing, or delete it to skip the intro.
+## Customization: Every machine is different
 
-### Overclock (optional, not included in the installer)
+Although Flop-Py comes ready to run, you can modify several settings to adapt the experience to your hardware.
 
-The installer does not touch the CPU frequency. To try an overclock, add it by hand to `/boot/firmware/config.txt`, under `[all]`:
+### Memory, CPU and devices
 
+In the same file, you'll find the `qemu-system-i386` launch command.
+
+There you can modify the memory (`-m`), processor (`-cpu`), acceleration (`-accel`) and device (`-device`) parameters.
+
+### HDMI audio output
+
+The script automatically searches for the HDMI audio output in PipeWire during startup and sets it as the default whenever available.
+
+If you prefer to use another output, such as the 3.5 mm audio jack, you can modify the `pactl set-default-sink` line or manually set the output using:
+
+```bash
+wpctl set-default
 ```
+
+### Intro video
+
+You can replace `media/intro.mp4` with another video before installing the system.
+
+If you prefer to boot directly without an intro, simply remove that file.
+
+### Automatic shutdown
+
+By default, the Raspberry Pi shuts down when QEMU closes.
+
+In `src/freedos-kiosk.sh`, locate:
+
+```bash
+POWEROFF_AL_SALIR=1
+```
+
+Change the value to `0` if you prefer the Raspberry Pi to remain powered on after exiting QEMU.
+
+## Overclocking (optional)
+
+The installer does not modify the CPU operating frequencies.
+
+If you want to experiment with a modest overclock, you can manually add the following setting to `/boot/firmware/config.txt`, inside the `[all]` section:
+
+```ini
 arm_freq=1300
 ```
 
-- Suitable values depend on the model and the power supply. The Pi 3 Model B runs at 1.2 GHz from the factory.
-- Before raising the frequency, check the power supply: `vcgencmd get_throttled` must return `0x0`. Any other value means under-voltage or thermal throttling.
-- If the Pi does not boot after the change, hold Shift during boot to disable the overclock, or remove the lines from the PC by mounting the card.
+Please keep the following in mind:
 
-### Using another system image
+- Supported values depend on the Raspberry Pi model and the power supply being used.
+- The Raspberry Pi 3 Model B runs at 1.2 GHz by default.
+- Before experimenting with higher frequencies, check that the power supply is stable before running the installer:
 
-The image is called `freedos14full.img` and lives in `/var/lib/freedos-kiosk/`. To use another one:
+```bash
+vcgencmd get_throttled
+```
 
-1. Create a 16 GB disk with `qemu-img create -f raw my_disk.img 16G`.
-2. Install your system on it, booting the installation image as `-fda` or `-cdrom`.
-3. Copy the result to `/var/lib/freedos-kiosk/freedos14full.img`, or change the path in `freedos-kiosk.sh`.
-4. Restart the service with `sudo systemctl restart freedos-kiosk.service`.
+The expected result is `0x0`. Any other value may indicate power supply issues, thermal throttling or other throttling events.
 
-Any system that boots on an x86 PC should work, though you may need to adjust `-cpu` and the devices if it needs more memory or hardware.
+If your Raspberry Pi fails to boot after changing the frequencies, you can remove the configuration from another computer by connecting the microSD card and editing `config.txt`.
 
-### Troubleshooting
+## Using a different system image
 
-- **QEMU does not start:** `journalctl -u freedos-kiosk -b --no-pager | tail -n 40`.
-- **Floppy drive not detected:** `ls -l /dev/floppy-usb`. Unplug it, wait a few seconds and plug it back in.
-- **Linux messages on screen:** check that `/boot/firmware/cmdline.txt` contains `systemd.show_status=0 fbcon=map:9`.
-- **JemmEx warning about E400-EBFF:** it is a warning, not an error.
-- **No sound:** inside FreeDOS, run `SBMIX` to check the mixer is not at zero. On the Pi, `wpctl status` should show `*` on the output you are using.
-- **Distorted PC speaker sound:** adjust the volume of the snd1 node in the script.
-- **The Pi throttles or reboots by itself:** check the power supply with `vcgencmd get_throttled`.
+The FreeDOS image used by Flop-Py is located at:
 
-### Uninstall
+```text
+/var/lib/freedos-kiosk/freedos14full.img
+```
+
+If you want to experiment with another x86-compatible operating system, you can replace it with your own image.
+
+### Procedure
+
+1. Create a 16 GB virtual disk:
+
+   ```bash
+   qemu-img create -f raw my_disk.img 16G
+   ```
+
+2. Install your chosen operating system using its installation image, booting from it through `-fda` or `-cdrom`.
+
+3. Copy the resulting image to `/var/lib/freedos-kiosk/freedos14full.img` or change the image path in `freedos-kiosk.sh`.
+
+4. Restart the service:
+
+   ```bash
+   sudo systemctl restart freedos-kiosk.service
+   ```
+
+In principle, any x86-compatible PC operating system that can boot under QEMU should work. However, you may need to adjust the CPU, memory and virtual device parameters.
+
+## Troubleshooting
+
+Let's face it: we're recreating an era when things didn't always work on the first try.
+
+Here are some of the most common problems and how to diagnose them.
+
+| Problem | Solution |
+|---|---|
+| QEMU won't start | Check the logs using `journalctl -u freedos-kiosk -b --no-pager \| tail -n 40`. |
+| The floppy drive is not detected | Check `/dev/floppy-usb` using `ls -l /dev/floppy-usb`. Disconnect the drive, wait a few seconds and reconnect it. |
+| Linux messages appear on screen | Check that `/boot/firmware/cmdline.txt` contains `systemd.show_status=0 fbcon=map:9`. |
+| JemmEx warning about E400-EBFF | This is a known warning, not a functional error. |
+| No sound | Run `SBMIX` inside FreeDOS to check that the mixer isn't muted. On the Raspberry Pi, use `wpctl status` to check the active audio output. |
+| The internal speaker sounds distorted | Reduce the volume of the `snd1` node in the script. |
+| The Raspberry Pi throttles or reboots unexpectedly | Check the power supply and temperature using `vcgencmd get_throttled`. |
+
+## Uninstallation
+
+If you decide to remove Flop-Py from your Raspberry Pi, you can run the following commands:
 
 ```bash
 sudo systemctl disable --now freedos-kiosk.service
@@ -451,16 +569,20 @@ sudo rm -rf /var/lib/freedos-kiosk
 sudo reboot
 ```
 
-### Limitations
+Please note that this procedure removes Flop-Py files and restores `cmdline.txt`, but does not automatically revert all the changes made during installation.
 
-- Emulation without hardware acceleration is slow on the Pi. Some games will run slowly, especially on the Pi 3.
-- Settings such as `thread=multi` or `tb-size` have no measurable effect on a Pi 3 with a single emulated CPU.
-- Commercial games are not included: copy them into the image yourself.
-- The PC speaker and the sound card share the output; volumes are adjusted separately with PipeWire nodes.
-- The HDMI audio output depends on the connected monitor.
+## Known limitations
 
+We're not going to sugarcoat it. The Raspberry Pi has its limitations, and emulating x86 hardware comes at a performance cost.
+
+- **Performance:** Emulation without hardware acceleration can be slow, especially on the Raspberry Pi 3. Some games and applications may demand more resources than the hardware can provide.
+- **Processing:** Parameters such as `thread=multi` or `tb-size` do not provide measurable performance improvements on the Raspberry Pi 3 with a single emulated CPU.
+- **Commercial software:** Commercial games and programs are not included. You'll need to add them to the image yourself.
+- **Audio:** The PC's internal speaker and sound card share the same audio output, although their volumes can be adjusted independently through PipeWire.
+- **HDMI:** HDMI audio availability depends on the connected monitor or TV.
+
+**Remember:** Flop-Py is not intended to turn a Raspberry Pi into a modern PC. Its purpose is to bring you closer to the experience of using one of those old computers, complete with their limitations and quirks.
+
+And that means accepting that sometimes, you'll just have to wait.
 ---
 
-## Licencia / License
-
-Los scripts pueden distribuirse bajo la licencia que elijas (por ejemplo, MIT). FreeDOS, JemmEx, mTCP y los drivers incluidos tienen sus propias licencias libres. / The scripts can be distributed under the license you choose (for example MIT). FreeDOS, JemmEx, mTCP and the included drivers have their own free licenses.
