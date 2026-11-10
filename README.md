@@ -1,8 +1,17 @@
-# FreeDOS Kiosk para Raspberry Pi / FreeDOS Kiosk for Raspberry Pi
+## Flop-Py: ¿Qué es y cuál es su filosofía?
+Flop-Py nace de la nostalgia por recuperar la experiencia real de los primeros equipos x86: el traqueteo de las disqueteras, las limitaciones de almacenamiento y el inconfundible sonido de las tarjetas Sound Blaster.
+Pero Flop-Py no quiere limitarse a imitar aquella época. Quiere que vuelvas a vivirla.
+El proyecto está diseñado para trabajar con disquetes físicos mediante una unidad USB (prepárate, porque necesitarás disquetes reales), conservando tanto sus virtudes como sus inconvenientes. Nada de atajos que eliminen la experiencia original. Todo ello aprovechando la conectividad y el reducido tamaño de equipos como Raspberry Pi, porque, seamos sinceros, el espacio no sobra.
+Aquí no encontrarás facilidades innecesarias.
+Si buscas un emulador moderno que te permita utilizar unidades virtuales, montar imágenes ISO o disponer de todas esas comodidades a las que estamos acostumbrados hoy en día, probablemente este no sea tu sitio.
+Flop-Py tiene otra filosofía: recuperar la experiencia de sentarse delante de un ordenador de mediados de los años 80. Eso significa volver a pelearse con el CONFIG.SYS y el AUTOEXEC.BAT, ajustar la memoria convencional, lidiar con las limitaciones del hardware y, por supuesto, esperar pacientemente a que la disquetera termine su trabajo.
+Porque aquí los tiempos de carga no se simulan: se sufren y se disfrutan.
+Flop-Py no está pensado para todo el mundo. Es un proyecto para quienes disfrutaron de aquella informática, para los curiosos que quieren descubrir cómo funcionaba realmente y para los que consideran que configurar un ordenador era casi tan divertido como utilizarlo.
+Si alguna vez has arrancado un ordenador desde un disquete de 3½ pulgadas, probablemente ya sabes de qué estamos hablando.
+La informática de antes. Con las limitaciones de antes. Y sin pedir disculpas por ello.
 
-Este proyecto convierte una Raspberry Pi en una máquina MS-DOS (FreeDOS 1.4) que arranca directamente, sin escritorio ni mensajes de Linux. Usa QEMU para emular un 486 con VGA, Sound Blaster 16, AdLib, tarjeta de red NE2000 y un disco duro de 16 GB, y lee disquetes de una disquetera USB como unidad A: con cambio en caliente.
+Bienvenido a Flop-Py.
 
-This project turns a Raspberry Pi into an MS-DOS machine (FreeDOS 1.4) that boots straight into it, with no desktop and no Linux messages. It uses QEMU to emulate a 486 with VGA, Sound Blaster 16, AdLib, an NE2000 network card and a 16 GB hard disk, and reads floppies from a USB floppy drive as drive A: with hot-swap.
 
 ---
 
@@ -10,13 +19,10 @@ This project turns a Raspberry Pi into an MS-DOS machine (FreeDOS 1.4) that boot
 
 ### Requisitos
 
-- Raspberry Pi 3 Model B, 3B+ o 4/400. La 3 es la más lenta y tiene 1 GB de RAM.
+- Raspberry Pi 3 Model B, 3B+ o 4/400. (El modelo 3B es la más lenta y tiene 1 GB de RAM lo que la hace la menos aconsjable patra vivir la experiencia mas real) .
 - Raspberry Pi OS de 64 bits, recién instalado, con conexión a Internet.
-- Fuente de alimentación oficial o de 5 V y 3 A. Una fuente floja hace que la Pi se limite sola.
-- Tarjeta microSD de 32 GB o más.
+- Tarjeta microSD de 32 GB.
 - Disquetera USB (probada: NEC USB UF000x).
-- Unos 17 GB libres.
-- Monitor con HDMI.
 
 ### Instalación
 
