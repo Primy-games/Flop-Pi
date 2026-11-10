@@ -1,0 +1,11 @@
+#!/bin/sh
+# Sesión X mínima: sin salvapantallas, fondo negro, openbox y vídeo de introducción - Minimum X session: no screensavers, black background, openbox and introductory video
+xset s off -dpms
+xsetroot -solid black
+openbox &
+unclutter -idle 0 -root &
+sleep 1
+if [ -f /var/lib/freedos-kiosk/intro.mp4 ]; then
+  mpv --fs --no-osc --no-input-default-bindings --really-quiet --no-terminal --hwdec=auto /var/lib/freedos-kiosk/intro.mp4
+fi
+exec /usr/local/bin/freedos-kiosk.sh

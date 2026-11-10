@@ -1,0 +1,19 @@
+[Unit]
+Description=FreeDOS en QEMU (kiosk)
+After=systemd-udev-settle.service user@1000.service
+Wants=systemd-udev-settle.service user@1000.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/xinit /usr/local/bin/freedos-kiosk-xinitrc -- :0 vt1
+TTYPath=/dev/tty1
+TTYReset=yes
+TTYVHangup=yes
+StandardInput=null
+StandardOutput=journal
+StandardError=journal
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
