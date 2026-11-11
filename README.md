@@ -38,9 +38,12 @@ Disquetes: por supuesto, necesitarás disquetes físicos. No hemos llegado hasta
 
 Clona el repositorio y ejecuta el instalador. Él se encargará de preparar el sistema y configurar los componentes necesarios.
 
-git clone https://github.com/Primy-games/Flop-Py.git 
+git clone https://github.com/Primy-games/Flop-Py.git
+
 cd Flop-Py
+
 sudo ./instalar.sh
+
 
 El instalador utiliza automáticamente el usuario que lo ejecuta (SUDO_USER) como usuario de ejecución (RUN_USER).
 
