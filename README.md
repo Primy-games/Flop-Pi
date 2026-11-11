@@ -1,3 +1,10 @@
+<p align="center">
+  <img src="media/Flop-Pi.jpg" alt="Flop-Pi">
+</p>
+
+
+
+
 ## Español
 
 ## Flop-Pi: ¿Qué es y cuál es su filosofía?
