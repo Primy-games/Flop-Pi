@@ -278,11 +278,17 @@ Comprueba la alimentación y la temperatura mediante vcgencmd get_throttled.
 Si decides retirar Flop-Pi de tu Raspberry Pi, puedes ejecutar los siguientes comandos:
 
 sudo systemctl disable --now freedos-kiosk.service
+
 sudo rm /etc/systemd/system/freedos-kiosk.service /usr/local/bin/freedos-kiosk*.sh /usr/local/bin/freedos-kiosk-xinitrc /etc/udev/rules.d/90-floppy-usb.rules
+
 sudo systemctl unmask getty@tty1.service
+
 sudo cp /boot/firmware/cmdline.txt.bak /boot/firmware/cmdline.txt
+
 sudo rm -rf /var/lib/freedos-kiosk
+
 sudo reboot
+
 
 Tenga en cuenta que este procedimiento elimina los archivos de Flop-Pi y restaura cmdline.txt, pero no revierte automáticamente todos los cambios realizados durante la instalación.
 
@@ -351,8 +357,11 @@ Clone the repository and run the installer. It will take care of preparing the s
 
 ```bash
 git clone https://github.com/Primy-games/Flop-Pi.git
+
 cd Flop-Pi
+
 sudo ./instalar.sh
+
 ```
 
 The installer automatically uses the user who launched it (`SUDO_USER`) as the runtime user (`RUN_USER`).
@@ -565,11 +574,17 @@ If you decide to remove Flop-Pi from your Raspberry Pi, you can run the followin
 
 ```bash
 sudo systemctl disable --now freedos-kiosk.service
+
 sudo rm /etc/systemd/system/freedos-kiosk.service /usr/local/bin/freedos-kiosk*.sh /usr/local/bin/freedos-kiosk-xinitrc /etc/udev/rules.d/90-floppy-usb.rules
+
 sudo systemctl unmask getty@tty1.service
+
 sudo cp /boot/firmware/cmdline.txt.bak /boot/firmware/cmdline.txt
+
 sudo rm -rf /var/lib/freedos-kiosk
+
 sudo reboot
+
 ```
 
 Please note that this procedure removes Flop-Pi files and restores `cmdline.txt`, but does not automatically revert all the changes made during installation.
