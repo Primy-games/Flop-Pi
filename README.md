@@ -107,25 +107,16 @@ Flop-Pi necesita preparar algunos componentes del sistema operativo para ofrecer
 
 ### Paquetes instalados
 
-qemu-system-x86
-
-qemu-system-gui
-
-socat
-
-xinit
-
-openbox
-
-x11-xserver-utils
-
-unclutter
-
-mpv
-
-pulseaudio-utils
-
-xz-utils
+- qemu-system-x86
+- qemu-system-gui
+- socat
+- xinit
+- openbox
+- x11-xserver-utils
+- unclutter
+- mpv
+- pulseaudio-utils
+- xz-utils
 
 ### Archivos del sistema
 
