@@ -1,18 +1,18 @@
 ## Español
 
-## Flop-Py: ¿Qué es y cuál es su filosofía?
-Flop-Py nace de la nostalgia por recuperar la experiencia real de los primeros equipos x86: el traqueteo de las disqueteras, las limitaciones de almacenamiento y el inconfundible sonido de las tarjetas Sound Blaster.
-Pero Flop-Py no quiere limitarse a imitar aquella época. Quiere que vuelvas a vivirla.
+## Flop-Pi: ¿Qué es y cuál es su filosofía?
+Flop-Pi nace de la nostalgia por recuperar la experiencia real de los primeros equipos x86: el traqueteo de las disqueteras, las limitaciones de almacenamiento y el inconfundible sonido de las tarjetas Sound Blaster.
+Pero Flop-Pi no quiere limitarse a imitar aquella época. Quiere que vuelvas a vivirla.
 El proyecto está diseñado para trabajar con disquetes físicos mediante una unidad USB (prepárate, porque necesitarás disquetes reales), conservando tanto sus virtudes como sus inconvenientes. Nada de atajos que eliminen la experiencia original. Todo ello aprovechando la conectividad y el reducido tamaño de equipos como Raspberry Pi, porque, seamos sinceros, el espacio no sobra.
 Aquí no encontrarás facilidades innecesarias.
 Si buscas un emulador moderno que te permita utilizar unidades virtuales, montar imágenes ISO o disponer de todas esas comodidades a las que estamos acostumbrados hoy en día, probablemente este no sea tu sitio.
-Flop-Py tiene otra filosofía: recuperar la experiencia de sentarse delante de un ordenador de mediados de los años 80. Eso significa volver a pelearse con el CONFIG.SYS y el AUTOEXEC.BAT, ajustar la memoria convencional, lidiar con las limitaciones del hardware y, por supuesto, esperar pacientemente a que la disquetera termine su trabajo.
+Flop-Pi tiene otra filosofía: recuperar la experiencia de sentarse delante de un ordenador de mediados de los años 80. Eso significa volver a pelearse con el CONFIG.SYS y el AUTOEXEC.BAT, ajustar la memoria convencional, lidiar con las limitaciones del hardware y, por supuesto, esperar pacientemente a que la disquetera termine su trabajo.
 Porque aquí los tiempos de carga no se simulan: se sufren y se disfrutan.
-Flop-Py no está pensado para todo el mundo. Es un proyecto para quienes disfrutaron de aquella informática, para los curiosos que quieren descubrir cómo funcionaba realmente y para los que consideran que configurar un ordenador era casi tan divertido como utilizarlo.
+Flop-Pi no está pensado para todo el mundo. Es un proyecto para quienes disfrutaron de aquella informática, para los curiosos que quieren descubrir cómo funcionaba realmente y para los que consideran que configurar un ordenador era casi tan divertido como utilizarlo.
 Si alguna vez has arrancado un ordenador desde un disquete de 3½ pulgadas, probablemente ya sabes de qué estamos hablando.
 La informática de antes. Con las limitaciones de antes. Y sin pedir disculpas por ello.
 
-Bienvenido a Flop-Py.
+Bienvenido a Flop-Pi.
 
 
 ---
@@ -38,9 +38,9 @@ Disquetes: por supuesto, necesitarás disquetes físicos. No hemos llegado hasta
 
 Clona el repositorio y ejecuta el instalador. Él se encargará de preparar el sistema y configurar los componentes necesarios.
 
-git clone https://github.com/Primy-games/Flop-Py.git
+git clone https://github.com/Primy-games/Flop-Pi.git
 
-cd Flop-Py
+cd Flop-Pi
 
 sudo ./instalar.sh
 
@@ -63,11 +63,11 @@ sudo IDIOMA=en ./instalar.sh
 
 # Uso: bienvenido de nuevo a los años 80
 
-Una vez instalado y reiniciado el sistema, Flop-Py arrancará automáticamente.
+Una vez instalado y reiniciado el sistema, Flop-Pi arrancará automáticamente.
 
 Estas son algunas de las operaciones básicas:
 
-Disquetes: conecta la disquetera USB con un disco insertado. Flop-Py lo reconocerá automáticamente como unidad A:. Cuando cambies de disco, el sistema detectará el nuevo sin necesidad de reiniciar.
+Disquetes: conecta la disquetera USB con un disco insertado. Flop-Pi lo reconocerá automáticamente como unidad A:. Cuando cambies de disco, el sistema detectará el nuevo sin necesidad de reiniciar.
 
 Ratón: queda capturado al hacer clic dentro de la ventana. 
 
@@ -99,7 +99,7 @@ freedos-kiosk/
 
 # ¿Qué instala y qué modifica?
 
-Flop-Py necesita preparar algunos componentes del sistema operativo para ofrecer una experiencia de arranque directa, sin escritorios ni elementos innecesarios.
+Flop-Pi necesita preparar algunos componentes del sistema operativo para ofrecer una experiencia de arranque directa, sin escritorios ni elementos innecesarios.
 
 # Paquetes instalados
 
@@ -157,7 +157,7 @@ Activa loginctl enable-linger para el usuario de ejecución, permitiendo que Pip
 
 # Personalización: cada máquina es un mundo
 
-Aunque Flop-Py viene preparado para funcionar directamente, puedes modificar algunos parámetros para adaptar la experiencia a tu hardware.
+Aunque Flop-Pi viene preparado para funcionar directamente, puedes modificar algunos parámetros para adaptar la experiencia a tu hardware.
 
 # Memoria, CPU y dispositivos
 
@@ -213,7 +213,7 @@ Si la Raspberry Pi deja de arrancar después de modificar las frecuencias, puede
 
 # Utilizar otra imagen de sistema
 
-La imagen de FreeDOS utilizada por Flop-Py se encuentra en:
+La imagen de FreeDOS utilizada por Flop-Pi se encuentra en:
 
 /var/lib/freedos-kiosk/freedos14full.img
 
@@ -275,7 +275,7 @@ Comprueba la alimentación y la temperatura mediante vcgencmd get_throttled.
 
 ## Desinstalación
 
-Si decides retirar Flop-Py de tu Raspberry Pi, puedes ejecutar los siguientes comandos:
+Si decides retirar Flop-Pi de tu Raspberry Pi, puedes ejecutar los siguientes comandos:
 
 sudo systemctl disable --now freedos-kiosk.service
 sudo rm /etc/systemd/system/freedos-kiosk.service /usr/local/bin/freedos-kiosk*.sh /usr/local/bin/freedos-kiosk-xinitrc /etc/udev/rules.d/90-floppy-usb.rules
@@ -284,7 +284,7 @@ sudo cp /boot/firmware/cmdline.txt.bak /boot/firmware/cmdline.txt
 sudo rm -rf /var/lib/freedos-kiosk
 sudo reboot
 
-Tenga en cuenta que este procedimiento elimina los archivos de Flop-Py y restaura cmdline.txt, pero no revierte automáticamente todos los cambios realizados durante la instalación.
+Tenga en cuenta que este procedimiento elimina los archivos de Flop-Pi y restaura cmdline.txt, pero no revierte automáticamente todos los cambios realizados durante la instalación.
 
 ## Limitaciones conocidas
 
@@ -300,7 +300,7 @@ Audio: el altavoz interno del PC y la tarjeta de sonido comparten la salida de a
 
 HDMI: la disponibilidad de la salida de audio HDMI depende del monitor o televisor conectado.
 
-Recuerda: Flop-Py no pretende convertir una Raspberry Pi en un PC moderno. Pretende acercarte a la experiencia de utilizar uno de aquellos ordenadores, con sus limitaciones y peculiaridades.
+Recuerda: Flop-Pi no pretende convertir una Raspberry Pi en un PC moderno. Pretende acercarte a la experiencia de utilizar uno de aquellos ordenadores, con sus limitaciones y peculiaridades.
 
 Y eso incluye aceptar que, algunas veces, tendrás que esperar.
 
@@ -308,11 +308,11 @@ Y eso incluye aceptar que, algunas veces, tendrás que esperar.
 
 ## English
 
-## Flop-Py: What Is It and What Is Its Philosophy?
+## Flop-Pi: What Is It and What Is Its Philosophy?
 
-Flop-Py was born out of nostalgia for bringing back the authentic experience of the early x86 computers: the clatter of floppy disk drives, storage limitations, and the unmistakable sound of Sound Blaster cards.
+Flop-Pi was born out of nostalgia for bringing back the authentic experience of the early x86 computers: the clatter of floppy disk drives, storage limitations, and the unmistakable sound of Sound Blaster cards.
 
-But Flop-Py doesn't just want to imitate that era. It wants you to experience it all over again.
+But Flop-Pi doesn't just want to imitate that era. It wants you to experience it all over again.
 
 The project is designed to work with physical floppy disks through a USB drive (get ready, because you'll need actual floppy disks), preserving both their advantages and their drawbacks. No shortcuts that take away from the original experience. All this while taking advantage of the connectivity and compact size of devices like the Raspberry Pi, because let's face it, space is at a premium.
 
@@ -320,17 +320,17 @@ You won't find any unnecessary conveniences here.
 
 If you're looking for a modern emulator that lets you use virtual drives, mount ISO images, or enjoy all the conveniences we've grown accustomed to nowadays, this probably isn't the place for you.
 
-Flop-Py follows a different philosophy: bringing back the experience of sitting in front of a computer from the mid-1980s. That means wrestling with CONFIG.SYS and AUTOEXEC.BAT again, tweaking conventional memory, dealing with hardware limitations and, of course, patiently waiting for the floppy drive to finish doing its job.
+Flop-Pi follows a different philosophy: bringing back the experience of sitting in front of a computer from the mid-1980s. That means wrestling with CONFIG.SYS and AUTOEXEC.BAT again, tweaking conventional memory, dealing with hardware limitations and, of course, patiently waiting for the floppy drive to finish doing its job.
 
 Because here, loading times aren't simulated: they're endured and enjoyed.
 
-Flop-Py isn't for everyone. It's a project for those who enjoyed computing back then, for curious minds who want to discover how things really worked, and for those who believe that configuring a computer was almost as much fun as actually using it.
+Flop-Pi isn't for everyone. It's a project for those who enjoyed computing back then, for curious minds who want to discover how things really worked, and for those who believe that configuring a computer was almost as much fun as actually using it.
 
 If you've ever booted a computer from a 3½-inch floppy disk, you probably know exactly what we're talking about.
 
 Computing the way it used to be. With the limitations it used to have. And without apologizing for any of it.
 
-Welcome to Flop-Py.
+Welcome to Flop-Pi.
 
 ---
 
@@ -350,8 +350,8 @@ Before getting started, make sure you have the following hardware ready. There a
 Clone the repository and run the installer. It will take care of preparing the system and configuring the required components.
 
 ```bash
-git clone https://github.com/Primy-games/Flop-Py.git
-cd Flop-Py
+git clone https://github.com/Primy-games/Flop-Pi.git
+cd Flop-Pi
 sudo ./instalar.sh
 ```
 
@@ -379,11 +379,11 @@ sudo IDIOMA=en ./instalar.sh
 
 ## Usage: Welcome back to the 1980s
 
-Once installed and rebooted, Flop-Py will start automatically.
+Once installed and rebooted, Flop-Pi will start automatically.
 
 Here are some basic operations:
 
-- **Floppy disks:** Connect the USB floppy drive with a disk inserted. Flop-Py will automatically detect it as drive A:. When you swap disks, the system will detect the new one without requiring a reboot.
+- **Floppy disks:** Connect the USB floppy drive with a disk inserted. Flop-Pi will automatically detect it as drive A:. When you swap disks, the system will detect the new one without requiring a reboot.
 - **Mouse:** The mouse is captured when you click inside the window.
 - **Fullscreen:** Enabled automatically.
 - **Shutdown:** Type `SHUTDOWN` inside FreeDOS. When QEMU closes, the Raspberry Pi will automatically shut down by default.
@@ -414,7 +414,7 @@ freedos-kiosk/
 
 ## What does it install and modify?
 
-Flop-Py needs to prepare certain operating system components to provide a direct boot experience, without desktops or unnecessary elements.
+Flop-Pi needs to prepare certain operating system components to provide a direct boot experience, without desktops or unnecessary elements.
 
 ### Installed packages
 
@@ -453,7 +453,7 @@ To achieve direct boot, the installer makes the following changes:
 
 ## Customization: Every machine is different
 
-Although Flop-Py comes ready to run, you can modify several settings to adapt the experience to your hardware.
+Although Flop-Pi comes ready to run, you can modify several settings to adapt the experience to your hardware.
 
 ### Memory, CPU and devices
 
@@ -515,7 +515,7 @@ If your Raspberry Pi fails to boot after changing the frequencies, you can remov
 
 ## Using a different system image
 
-The FreeDOS image used by Flop-Py is located at:
+The FreeDOS image used by Flop-Pi is located at:
 
 ```text
 /var/lib/freedos-kiosk/freedos14full.img
@@ -561,7 +561,7 @@ Here are some of the most common problems and how to diagnose them.
 
 ## Uninstallation
 
-If you decide to remove Flop-Py from your Raspberry Pi, you can run the following commands:
+If you decide to remove Flop-Pi from your Raspberry Pi, you can run the following commands:
 
 ```bash
 sudo systemctl disable --now freedos-kiosk.service
@@ -572,7 +572,7 @@ sudo rm -rf /var/lib/freedos-kiosk
 sudo reboot
 ```
 
-Please note that this procedure removes Flop-Py files and restores `cmdline.txt`, but does not automatically revert all the changes made during installation.
+Please note that this procedure removes Flop-Pi files and restores `cmdline.txt`, but does not automatically revert all the changes made during installation.
 
 ## Known limitations
 
@@ -584,7 +584,7 @@ We're not going to sugarcoat it. The Raspberry Pi has its limitations, and emula
 - **Audio:** The PC's internal speaker and sound card share the same audio output, although their volumes can be adjusted independently through PipeWire.
 - **HDMI:** HDMI audio availability depends on the connected monitor or TV.
 
-**Remember:** Flop-Py is not intended to turn a Raspberry Pi into a modern PC. Its purpose is to bring you closer to the experience of using one of those old computers, complete with their limitations and quirks.
+**Remember:** Flop-Pi is not intended to turn a Raspberry Pi into a modern PC. Its purpose is to bring you closer to the experience of using one of those old computers, complete with their limitations and quirks.
 
 And that means accepting that sometimes, you'll just have to wait.
 ---
