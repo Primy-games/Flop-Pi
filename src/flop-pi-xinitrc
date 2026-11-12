@@ -1,11 +1,12 @@
 #!/bin/sh
-# Sesión X mínima: sin salvapantallas, fondo negro, openbox y vídeo de introducción - Minimum X session: no screensavers, black background, openbox and introductory video
-xset s off -dpms
-xsetroot -solid black
-openbox &
-unclutter -idle 0 -root &
+# Sesión X mínima: sin salvapantallas, fondo negro, openbox y vídeo de introducción
+# Minimal X session: no screensaver, black background, openbox and intro video
+xset s off -dpms                 # sin salvapantallas ni apagado de pantalla / no screensaver or display power-off
+xsetroot -solid black            # fondo negro / black background
+openbox &                        # gestor de ventanas sin atajos / window manager without shortcuts
+unclutter -idle 0 -root &        # oculta el cursor sin movimiento / hides the cursor when idle
 sleep 1
-if [ -f /var/lib/freedos-kiosk/intro.mp4 ]; then
-  mpv --fs --no-osc --no-input-default-bindings --really-quiet --no-terminal --hwdec=auto /var/lib/freedos-kiosk/intro.mp4
+if [ -f /var/lib/flop-pi/intro.mp4 ]; then   # vídeo opcional / optional video
+  mpv --fs --no-osc --no-input-default-bindings --really-quiet --no-terminal --hwdec=auto /var/lib/flop-pi/intro.mp4
 fi
-exec /usr/local/bin/freedos-kiosk.sh
+exec /usr/local/bin/flop-pi.sh   # lanza la máquina virtual / launches the virtual machine

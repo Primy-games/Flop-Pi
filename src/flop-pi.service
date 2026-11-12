@@ -1,11 +1,13 @@
 [Unit]
-Description=FreeDOS en QEMU (kiosk)
+# Servicio de Flop-Pi / Flop-Pi service
+Description=Flop-Pi: máquina virtual en el kiosco / virtual machine in the kiosk
 After=systemd-udev-settle.service user@1000.service
 Wants=systemd-udev-settle.service user@1000.service
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/xinit /usr/local/bin/freedos-kiosk-xinitrc -- :0 vt1
+# Sesión X mínima que lanza el kiosco / Minimal X session that launches the kiosk
+ExecStart=/usr/bin/xinit /usr/local/bin/flop-pi-xinitrc -- :0 vt1
 TTYPath=/dev/tty1
 TTYReset=yes
 TTYVHangup=yes
