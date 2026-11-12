@@ -33,18 +33,18 @@ Antes de empezar, asegúrate de tener a mano lo siguiente. Aquí no hay máquina
 
 - La Raspberry Pi 3 Model B es la menos recomendable. Su procesador es el más lento de los modelos compatibles y sus 1 GB de RAM la convierten en la opción más limitada. Si buscas una experiencia lo más cercana posible a la original, es preferible utilizar una Pi 4.
 
-- **Sistema operativo:** Raspberry Pi OS de 64 bits, recién instalado y con conexión a Internet.
+- **Sistema operativo:** Raspberry Pi OS de 64 bits, recién instalado y con conexión a Internet (opcional SSH).
 
-- **Almacenamiento:** tarjeta microSD de 32 GB.
+- **Almacenamiento:** tarjeta microSD de 32 GB o menos, si prefieres usar una imagen vacía del sistema.
 
 - **Disquetera:** unidad USB compatible (probada con NEC USB UF000x y TEAC FD-05PUB).
 
-- **Disquetes:** por supuesto, necesitarás disquetes físicos. No hemos llegado hasta aquí para utilizar imágenes virtuales.
+- **Disquetes:** Por supuesto, necesitarás disquetes físicos. No hemos llegado hasta aquí para utilizar imágenes virtuales.
 
 
 ## Instalación: manos a la obra
 
-Clona el repositorio y ejecuta el instalador. Él se encargará de preparar el sistema y configurar los componentes necesarios.
+Clona el repositorio y ejecuta el instalador. Él se encargará de preparar el sistema y configurar los componentes necesarios. Recuerda usar una instalación limpia sin personalizaciones, todo sera eliminado.
 
 ```bash
 git clone https://github.com/Primy-games/Flop-Pi.git
@@ -83,7 +83,7 @@ Estas son algunas de las operaciones básicas:
 - **Disquetes:** conecta la disquetera USB con un disco insertado. Flop-Pi lo reconocerá automáticamente como unidad A:. Cuando cambies de disco, el sistema detectará el nuevo sin necesidad de reiniciar.
 - **Ratón:** queda capturado al hacer clic dentro de la ventana.
 - **Pantalla completa:** se activa automáticamente.
-- **Apagado:** escribe `SHUTDOWN` dentro de FreeDOS. Al cerrarse QEMU, la Raspberry Pi se apagará automáticamente por defecto.
+- **Apagado:** escribe `SHUTDOWN` dentro de FreeDOS. Al cerrarse QEMU, la Raspberry Pi se apagará automáticamente por defecto. (Solo si usas la imagen preconfigurada)
 
 **IMPORTANTE:** no desconectes la alimentación de la Raspberry Pi mientras FreeDOS esté funcionando. Utiliza siempre el comando `SHUTDOWN` para apagar correctamente el sistema.
 
