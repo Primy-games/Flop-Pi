@@ -17,6 +17,7 @@ Flop-Pi tiene otra filosofía: recuperar la experiencia de sentarse delante de u
 Porque aquí los tiempos de carga no se simulan: se sufren y se disfrutan.
 Flop-Pi no está pensado para todo el mundo. Es un proyecto para quienes disfrutaron de aquella informática, para los curiosos que quieren descubrir cómo funcionaba realmente y para los que consideran que configurar un ordenador era casi tan divertido como utilizarlo.
 Si alguna vez has arrancado un ordenador desde un disquete de 3½ pulgadas, probablemente ya sabes de qué estamos hablando.
+
 La informática de antes. Con las limitaciones de antes. Y sin pedir disculpas por ello.
 
 Bienvenido a Flop-Pi.
