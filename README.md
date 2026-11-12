@@ -29,13 +29,13 @@ Bienvenido a Flop-Pi.
 
 Antes de empezar, asegúrate de tener a mano lo siguiente. Aquí no hay máquinas virtuales mágicas ni disqueteras imaginarias: necesitamos hardware real.
 
-- **Raspberry Pi:** modelos 3 Model B, 3B+, 4 o 400.
+- **Raspberry Pi:** modelos Raspberry Pi 3 Model B, 3B+, 4 o 400.
 
 - La Raspberry Pi 3 Model B es la menos recomendable. Su procesador es el más lento de los modelos compatibles y sus 1 GB de RAM la convierten en la opción más limitada. Si buscas una experiencia lo más cercana posible a la original, es preferible utilizar una Pi 4.
 
 - **Sistema operativo:** Raspberry Pi OS de 64 bits, recién instalado y con conexión a Internet (opcional SSH).
 
-- **Almacenamiento:** tarjeta microSD de 32 GB o menos, si prefieres usar una imagen vacía del sistema.
+- **Almacenamiento:** si usas la imagen preconfigurada de FreeDOS, necesitas 17 GB de espacio libre en la tarjeta microSD. Si prefieres crear una imagen vacía, necesitarás el espacio que elijas al crearla.
 
 - **Disquetera:** unidad USB compatible (probada con NEC USB UF000x y TEAC FD-05PUB).
 
@@ -44,7 +44,7 @@ Antes de empezar, asegúrate de tener a mano lo siguiente. Aquí no hay máquina
 
 ## Instalación: manos a la obra
 
-Clona el repositorio y ejecuta el instalador. Él se encargará de preparar el sistema y configurar los componentes necesarios. Recuerda usar una instalación limpia sin personalizaciones, todo sera eliminado.
+Clona el repositorio y ejecuta el instalador. Él se encargará de preparar el sistema y configurar los componentes necesarios. Recuerda usar una instalación limpia sin personalizaciones, todo será eliminado.
 
 ```bash
 git clone https://github.com/Primy-games/Flop-Pi.git
@@ -53,6 +53,11 @@ sudo ./instalar.sh
 ```
 
 El instalador utiliza automáticamente el usuario que lo ejecuta (SUDO_USER) como usuario de ejecución (RUN_USER).
+
+El instalador comprueba si ya existe un disco en `/var/lib/flop-pi/`. Si no existe, te ofrece dos opciones:
+
+- **Imagen preparada:** el sistema ya viene instalado. Ocupa unos 16 GB y se comprueba que haya espacio libre antes de empezar.
+- **Disco vacío:** tú eliges el tamaño y el formato (`raw` o `qcow2`), e instalas el sistema desde cero.
 
 Al finalizar, te preguntará si deseas reiniciar el sistema. Si prefieres hacerlo más tarde, puedes reiniciar manualmente:
 
@@ -81,6 +86,7 @@ Una vez instalado y reiniciado el sistema, Flop-Pi arrancará automáticamente.
 Estas son algunas de las operaciones básicas:
 
 - **Disquetes:** conecta la disquetera USB con un disco insertado. Flop-Pi lo reconocerá automáticamente como unidad A:. Cuando cambies de disco, el sistema detectará el nuevo sin necesidad de reiniciar.
+- **Arranque desde disquete:** si la disquetera tiene un disquete de arranque insertado antes de encender la Raspberry Pi, el equipo arrancará desde él, como en los ordenadores antiguos. Si el disquete no es de arranque, el sistema continuará desde el disco duro.
 - **Ratón:** queda capturado al hacer clic dentro de la ventana.
 - **Pantalla completa:** se activa automáticamente.
 - **Apagado:** escribe `SHUTDOWN` dentro de FreeDOS. Al cerrarse QEMU, la Raspberry Pi se apagará automáticamente por defecto. (Solo si usas la imagen preconfigurada)
@@ -92,20 +98,21 @@ Estas son algunas de las operaciones básicas:
 Esta es la organización de los archivos del repositorio:
 
 ```text
-freedos-kiosk/
+Flop-Pi/
 ├── instalar.sh                  Instalador (bilingüe)
 ├── README.md                    Documentación del proyecto
 ├── src/
-│   ├── freedos-kiosk.sh         Lanzamiento de QEMU, volúmenes,
+│   ├── flop-pi.sh               Lanzamiento de QEMU, volúmenes,
 │   │                            salida HDMI y vigilancia de disquetes
-│   ├── freedos-kiosk-xinitrc    Sesión X: vídeo de introducción
+│   ├── flop-pi-xinitrc          Sesión X: vídeo de introducción
 │   │                            y lanzamiento del sistema
-│   ├── freedos-kiosk.service    Servicio de systemd
+│   ├── flop-pi.service          Servicio de systemd
+│   ├── openbox-rc.xml           Openbox sin atajos de teclado ni de ratón
 │   └── 90-floppy-usb.rules      Regla udev para /dev/floppy-usb
 ├── media/
 │   └── intro.mp4                Vídeo de introducción (opcional)
 └── image/
-    ├── freedos14full.img.xz     Imagen comprimida de FreeDOS
+    ├── freedos14full.img.xz     Imagen preparada comprimida
     └── SHA256SUMS               Suma de verificación de la imagen
 ```
 
@@ -117,6 +124,7 @@ Flop-Pi necesita preparar algunos componentes del sistema operativo para ofrecer
 
 - qemu-system-x86
 - qemu-system-gui
+- qemu-utils
 - socat
 - xinit
 - openbox
@@ -130,11 +138,13 @@ Flop-Pi necesita preparar algunos componentes del sistema operativo para ofrecer
 
 El instalador crea o modifica los siguientes archivos y directorios:
 
-- `/usr/local/bin/freedos-kiosk.sh`
-- `/usr/local/bin/freedos-kiosk-xinitrc`
-- `/etc/systemd/system/freedos-kiosk.service`
+- `/usr/local/bin/flop-pi.sh`
+- `/usr/local/bin/flop-pi-xinitrc`
+- `/etc/systemd/system/flop-pi.service`
 - `/etc/udev/rules.d/90-floppy-usb.rules`
-- `/var/lib/freedos-kiosk/` (imagen del sistema y vídeo)
+- `/etc/flop-pi.conf` (ruta del disco que usa el sistema)
+- `/var/lib/flop-pi/` (disco del sistema y vídeo)
+- `/root/.config/openbox/rc.xml` (se conserva una copia de seguridad en `rc.xml.bak`)
 - `/boot/firmware/cmdline.txt` (se conserva una copia de seguridad en `cmdline.txt.bak`)
 - `/boot/firmware/config.txt` (añade `disable_splash=1` dentro de `[all]` para eliminar la pantalla del arcoíris durante el arranque).
 
@@ -154,7 +164,7 @@ Aunque Flop-Pi viene preparado para funcionar directamente, puedes modificar alg
 
 ### Memoria, CPU y dispositivos
 
-En el mismo archivo encontrarás la línea de ejecución de `qemu-system-i386`.
+En el archivo `src/flop-pi.sh` encontrarás la línea de ejecución de `qemu-system-i386`.
 
 Allí puedes modificar los parámetros de memoria (`-m`), procesador (`-cpu`), aceleración (`-accel`) y dispositivos (`-device`).
 
@@ -178,7 +188,7 @@ Si prefieres arrancar directamente sin introducción, simplemente elimina ese ar
 
 Por defecto, la Raspberry Pi se apaga al cerrar QEMU.
 
-En `src/freedos-kiosk.sh`, localiza:
+En `src/flop-pi.sh`, localiza:
 
 ```bash
 POWEROFF_AL_SALIR=1
@@ -212,10 +222,10 @@ Si la Raspberry Pi deja de arrancar después de modificar las frecuencias, puede
 
 ## Utilizar otra imagen de sistema
 
-La imagen de FreeDOS utilizada por Flop-Pi se encuentra en:
+El disco que usa Flop-Pi se indica en `/etc/flop-pi.conf`, en la variable `IMG`. La imagen preparada se encuentra en:
 
 ```text
-/var/lib/freedos-kiosk/freedos14full.img
+/var/lib/flop-pi/freedos14full.img
 ```
 
 Si quieres experimentar con otro sistema operativo compatible con x86, puedes sustituirla por tu propia imagen.
@@ -230,12 +240,12 @@ Si quieres experimentar con otro sistema operativo compatible con x86, puedes su
 
 2. Instala el sistema operativo que quieras utilizando la imagen de instalación correspondiente, arrancando desde ella mediante `-fda` o `-cdrom`.
 
-3. Copia el resultado a `/var/lib/freedos-kiosk/freedos14full.img` o modifica la ruta de la imagen en `freedos-kiosk.sh`.
+3. Copia el resultado a `/var/lib/flop-pi/` y cambia la variable `IMG` en `/etc/flop-pi.conf` para que apunte a él.
 
 4. Reinicia el servicio:
 
    ```bash
-   sudo systemctl restart freedos-kiosk.service
+   sudo systemctl restart flop-pi.service
    ```
 
 En principio, cualquier sistema operativo compatible con PC x86 que pueda arrancar mediante QEMU debería funcionar. No obstante, puede ser necesario modificar los parámetros de CPU, memoria y dispositivos virtuales.
@@ -248,7 +258,7 @@ Estos son algunos de los problemas más habituales y cómo diagnosticarlos.
 
 | Problema | Solución |
 |---|---|
-| QEMU no arranca | Consulta los registros con `journalctl -u freedos-kiosk -b --no-pager \| tail -n 40`. |
+| QEMU no arranca | Consulta los registros con `journalctl -u flop-pi -b --no-pager \| tail -n 40`. |
 | La disquetera no aparece | Comprueba `/dev/floppy-usb` con `ls -l /dev/floppy-usb`. Desconecta la unidad, espera unos segundos y vuelve a conectarla. |
 | Aparecen mensajes de Linux en pantalla | Comprueba que `/boot/firmware/cmdline.txt` contiene `systemd.show_status=0 fbcon=map:9`. |
 | Aviso de JemmEx sobre E400-EBFF | Es un aviso conocido, no un error de funcionamiento. |
@@ -261,11 +271,11 @@ Estos son algunos de los problemas más habituales y cómo diagnosticarlos.
 Si decides retirar Flop-Pi de tu Raspberry Pi, puedes ejecutar los siguientes comandos:
 
 ```bash
-sudo systemctl disable --now freedos-kiosk.service
-sudo rm /etc/systemd/system/freedos-kiosk.service /usr/local/bin/freedos-kiosk*.sh /usr/local/bin/freedos-kiosk-xinitrc /etc/udev/rules.d/90-floppy-usb.rules
+sudo systemctl disable --now flop-pi.service
+sudo rm /etc/systemd/system/flop-pi.service /usr/local/bin/flop-pi.sh /usr/local/bin/flop-pi-xinitrc /etc/udev/rules.d/90-floppy-usb.rules /etc/flop-pi.conf
 sudo systemctl unmask getty@tty1.service
 sudo cp /boot/firmware/cmdline.txt.bak /boot/firmware/cmdline.txt
-sudo rm -rf /var/lib/freedos-kiosk
+sudo rm -rf /var/lib/flop-pi
 sudo reboot
 ```
 
@@ -321,16 +331,16 @@ Welcome to Flop-Pi.
 
 Before getting started, make sure you have the following hardware ready. There are no magic virtual machines or imaginary floppy drives here: we need real hardware.
 
-- **Raspberry Pi:** Models 3 Model B, 3B+, 4 or 400.
+- **Raspberry Pi:** Raspberry Pi 3 Model B, 3B+, 4 or 400.
 - The Raspberry Pi 3 Model B is the least recommended option. It has the slowest processor among the supported models, and its 1 GB of RAM makes it the most limited choice. If you're looking for an experience as close as possible to the original, a Pi 4 is preferable.
-- **Operating system:** A fresh installation of 64-bit Raspberry Pi OS with an Internet connection.
-- **Storage:** 32 GB microSD card.
+- **Operating system:** A fresh installation of 64-bit Raspberry Pi OS with an Internet connection (optional SSH).
+- **Storage:** If you use the preconfigured FreeDOS image, you need 17 GB of free space on the microSD card. If you prefer to create an empty disk, you need the space you choose when creating it.
 - **Floppy drive:** Compatible USB floppy drive (tested with NEC USB UF000x and TEAC FD-05PUB).
 - **Floppy disks:** Of course, you'll need actual physical floppy disks. We haven't come this far just to use virtual disk images.
 
 ## Installation: Let's get started
 
-Clone the repository and run the installer. It will take care of preparing the system and configuring the required components.
+Clone the repository and run the installer. Make sure you use a clean installation without customizations, because everything will be removed.
 
 ```bash
 git clone https://github.com/Primy-games/Flop-Pi.git
@@ -339,6 +349,11 @@ sudo ./instalar.sh
 ```
 
 The installer automatically uses the user who launched it (`SUDO_USER`) as the runtime user (`RUN_USER`).
+
+The installer checks whether a disk already exists in `/var/lib/flop-pi/`. If none exists, it offers two options:
+
+- **Prepared image:** the system is already installed. It takes about 16 GB, and the installer checks there is enough free space before starting.
+- **Empty disk:** you choose the size and the format (`raw` or `qcow2`), and install the system from scratch.
 
 At the end, it will ask whether you want to reboot the system. If you prefer to do it later, you can reboot manually:
 
@@ -367,9 +382,10 @@ Once installed and rebooted, Flop-Pi will start automatically.
 Here are some basic operations:
 
 - **Floppy disks:** Connect the USB floppy drive with a disk inserted. Flop-Pi will automatically detect it as drive A:. When you swap disks, the system will detect the new one without requiring a reboot.
+- **Booting from a floppy:** if the floppy drive has a boot disk inserted before you power on the Raspberry Pi, the machine will boot from it, just like older computers. If the disk is not a boot disk, the system continues from the hard disk.
 - **Mouse:** The mouse is captured when you click inside the window.
 - **Fullscreen:** Enabled automatically.
-- **Shutdown:** Type `SHUTDOWN` inside FreeDOS. When QEMU closes, the Raspberry Pi will automatically shut down by default.
+- **Shutdown:** Type `SHUTDOWN` inside FreeDOS. When QEMU closes, the Raspberry Pi will automatically shut down by default. (Only if you use the preconfigured image)
 
 **IMPORTANT:** Never disconnect the Raspberry Pi's power supply while FreeDOS is running. Always use the `SHUTDOWN` command to shut down the system properly.
 
@@ -378,20 +394,21 @@ Here are some basic operations:
 This is how the repository files are organized:
 
 ```text
-freedos-kiosk/
+Flop-Pi/
 ├── instalar.sh                  Installer (bilingual)
 ├── README.md                    Project documentation
 ├── src/
-│   ├── freedos-kiosk.sh         QEMU launcher, audio levels,
+│   ├── flop-pi.sh               QEMU launcher, audio levels,
 │   │                            HDMI output and floppy disk monitoring
-│   ├── freedos-kiosk-xinitrc    X session: intro video
+│   ├── flop-pi-xinitrc          X session: intro video
 │   │                            and system launch
-│   ├── freedos-kiosk.service    systemd service
+│   ├── flop-pi.service          systemd service
+│   ├── openbox-rc.xml           Openbox without keyboard or mouse shortcuts
 │   └── 90-floppy-usb.rules      udev rule for /dev/floppy-usb
 ├── media/
 │   └── intro.mp4                Intro video (optional)
 └── image/
-    ├── freedos14full.img.xz     Compressed FreeDOS image
+    ├── freedos14full.img.xz     Compressed prepared image
     └── SHA256SUMS               Image checksum
 ```
 
@@ -403,6 +420,7 @@ Flop-Pi needs to prepare certain operating system components to provide a direct
 
 - qemu-system-x86
 - qemu-system-gui
+- qemu-utils
 - socat
 - xinit
 - openbox
@@ -416,11 +434,13 @@ Flop-Pi needs to prepare certain operating system components to provide a direct
 
 The installer creates or modifies the following files and directories:
 
-- `/usr/local/bin/freedos-kiosk.sh`
-- `/usr/local/bin/freedos-kiosk-xinitrc`
-- `/etc/systemd/system/freedos-kiosk.service`
+- `/usr/local/bin/flop-pi.sh`
+- `/usr/local/bin/flop-pi-xinitrc`
+- `/etc/systemd/system/flop-pi.service`
 - `/etc/udev/rules.d/90-floppy-usb.rules`
-- `/var/lib/freedos-kiosk/` (system image and video)
+- `/etc/flop-pi.conf` (path of the disk the system uses)
+- `/var/lib/flop-pi/` (system disk and video)
+- `/root/.config/openbox/rc.xml` (a backup is saved as `rc.xml.bak`)
 - `/boot/firmware/cmdline.txt` (a backup is saved as `cmdline.txt.bak`)
 - `/boot/firmware/config.txt` (adds `disable_splash=1` inside `[all]` to hide the rainbow splash screen during boot).
 
@@ -440,7 +460,7 @@ Although Flop-Pi comes ready to run, you can modify several settings to adapt th
 
 ### Memory, CPU and devices
 
-In the same file, you'll find the `qemu-system-i386` launch command.
+In the file `src/flop-pi.sh` you'll find the `qemu-system-i386` launch command.
 
 There you can modify the memory (`-m`), processor (`-cpu`), acceleration (`-accel`) and device (`-device`) parameters.
 
@@ -464,7 +484,7 @@ If you prefer to boot directly without an intro, simply remove that file.
 
 By default, the Raspberry Pi shuts down when QEMU closes.
 
-In `src/freedos-kiosk.sh`, locate:
+In `src/flop-pi.sh`, locate:
 
 ```bash
 POWEROFF_AL_SALIR=1
@@ -486,11 +506,11 @@ Please keep the following in mind:
 
 - Supported values depend on the Raspberry Pi model and the power supply being used.
 - The Raspberry Pi 3 Model B runs at 1.2 GHz by default.
-- Before experimenting with higher frequencies, check that the power supply is stable before running the installer:
+- Before experimenting with higher frequencies, check that the power supply is stable by running:
 
-```bash
-vcgencmd get_throttled
-```
+  ```bash
+  vcgencmd get_throttled
+  ```
 
 The expected result is `0x0`. Any other value may indicate power supply issues, thermal throttling or other throttling events.
 
@@ -498,10 +518,10 @@ If your Raspberry Pi fails to boot after changing the frequencies, you can remov
 
 ## Using a different system image
 
-The FreeDOS image used by Flop-Pi is located at:
+The disk used by Flop-Pi is set in `/etc/flop-pi.conf`, in the `IMG` variable. The prepared image is located at:
 
 ```text
-/var/lib/freedos-kiosk/freedos14full.img
+/var/lib/flop-pi/freedos14full.img
 ```
 
 If you want to experiment with another x86-compatible operating system, you can replace it with your own image.
@@ -516,12 +536,12 @@ If you want to experiment with another x86-compatible operating system, you can 
 
 2. Install your chosen operating system using its installation image, booting from it through `-fda` or `-cdrom`.
 
-3. Copy the resulting image to `/var/lib/freedos-kiosk/freedos14full.img` or change the image path in `freedos-kiosk.sh`.
+3. Copy the resulting disk to `/var/lib/flop-pi/` and change the `IMG` variable in `/etc/flop-pi.conf` so it points to it.
 
 4. Restart the service:
 
    ```bash
-   sudo systemctl restart freedos-kiosk.service
+   sudo systemctl restart flop-pi.service
    ```
 
 In principle, any x86-compatible PC operating system that can boot under QEMU should work. However, you may need to adjust the CPU, memory and virtual device parameters.
@@ -534,7 +554,7 @@ Here are some of the most common problems and how to diagnose them.
 
 | Problem | Solution |
 |---|---|
-| QEMU won't start | Check the logs using `journalctl -u freedos-kiosk -b --no-pager \| tail -n 40`. |
+| QEMU won't start | Check the logs using `journalctl -u flop-pi -b --no-pager \| tail -n 40`. |
 | The floppy drive is not detected | Check `/dev/floppy-usb` using `ls -l /dev/floppy-usb`. Disconnect the drive, wait a few seconds and reconnect it. |
 | Linux messages appear on screen | Check that `/boot/firmware/cmdline.txt` contains `systemd.show_status=0 fbcon=map:9`. |
 | JemmEx warning about E400-EBFF | This is a known warning, not a functional error. |
@@ -547,11 +567,11 @@ Here are some of the most common problems and how to diagnose them.
 If you decide to remove Flop-Pi from your Raspberry Pi, you can run the following commands:
 
 ```bash
-sudo systemctl disable --now freedos-kiosk.service
-sudo rm /etc/systemd/system/freedos-kiosk.service /usr/local/bin/freedos-kiosk*.sh /usr/local/bin/freedos-kiosk-xinitrc /etc/udev/rules.d/90-floppy-usb.rules
+sudo systemctl disable --now flop-pi.service
+sudo rm /etc/systemd/system/flop-pi.service /usr/local/bin/flop-pi.sh /usr/local/bin/flop-pi-xinitrc /etc/udev/rules.d/90-floppy-usb.rules /etc/flop-pi.conf
 sudo systemctl unmask getty@tty1.service
 sudo cp /boot/firmware/cmdline.txt.bak /boot/firmware/cmdline.txt
-sudo rm -rf /var/lib/freedos-kiosk
+sudo rm -rf /var/lib/flop-pi
 sudo reboot
 ```
 
@@ -570,4 +590,3 @@ We're not going to sugarcoat it. The Raspberry Pi has its limitations, and emula
 **Remember:** Flop-Pi is not intended to turn a Raspberry Pi into a modern PC. Its purpose is to bring you closer to the experience of using one of those old computers, complete with their limitations and quirks.
 
 And that means accepting that sometimes, you'll just have to wait.
----
