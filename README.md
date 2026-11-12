@@ -2,7 +2,7 @@
   <img src="media/Flop-Pi.jpg" alt="Flop-Pi">
 </p>
 
-
+[ESP](#español) | [EN](#english)
 
 
 ## Español
