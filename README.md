@@ -49,6 +49,7 @@ Clona el repositorio y ejecuta el instalador. Él se encargará de preparar el s
 ```bash
 git clone https://github.com/Primy-games/Flop-Pi.git
 cd Flop-Pi
+chmod +x instalar.sh
 sudo ./instalar.sh
 ```
 
@@ -345,6 +346,7 @@ Clone the repository and run the installer. Make sure you use a clean installati
 ```bash
 git clone https://github.com/Primy-games/Flop-Pi.git
 cd Flop-Pi
+chmod +x instalar.sh
 sudo ./instalar.sh
 ```
 
