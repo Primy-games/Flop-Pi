@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="media/Flop-Pi.jpg" alt="Flop-Pi">
+  <img src="media/Logo2_Flop-Pi.jpg" alt="Flop-Pi">
 </p>
 
 [ESP](#español) | [EN](#english)
